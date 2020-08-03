@@ -11,6 +11,7 @@
 
 
 ## <a name="pkg-index">Index</a>
+* [func Bounds(p Projection, bb []float64) []float64](#Bounds)
 * [type LambertConformal](#LambertConformal)
   * [func NewZealandLambertConformal() LambertConformal](#NewZealandLambertConformal)
   * [func (lc LambertConformal) Forward(lon, lat float64) (float64, float64)](#LambertConformal.Forward)
@@ -19,6 +20,7 @@
   * [func NewNZCS2000() NZCS2000](#NewNZCS2000)
 * [type NZTM2000](#NZTM2000)
   * [func NewNZTM2000() NZTM2000](#NewNZTM2000)
+* [type Projection](#Projection)
 * [type TransverseMercator](#TransverseMercator)
   * [func NewZealandTransverseMercator() TransverseMercator](#NewZealandTransverseMercator)
   * [func (tm TransverseMercator) Forward(lon, lat float64) (float64, float64)](#TransverseMercator.Forward)
@@ -26,10 +28,16 @@
 
 
 #### <a name="pkg-files">Package files</a>
-[nzcs2000.go](/src/target/nzcs2000.go) [nztm2000.go](/src/target/nztm2000.go) 
+[nzcs2000.go](/src/target/nzcs2000.go) [nztm2000.go](/src/target/nztm2000.go) [projection.go](/src/target/projection.go) 
 
 
 
+
+
+## <a name="Bounds">func</a> [Bounds](/src/target/projection.go?s=139:188#L8)
+``` go
+func Bounds(p Projection, bb []float64) []float64
+```
 
 
 
@@ -106,6 +114,22 @@ type NZTM2000 struct {
 ``` go
 func NewNZTM2000() NZTM2000
 ```
+
+
+
+
+## <a name="Projection">type</a> [Projection](/src/target/projection.go?s=16:137#L3)
+``` go
+type Projection interface {
+    Forward(float64, float64) (float64, float64)
+    Inverse(float64, float64) (float64, float64)
+}
+```
+
+
+
+
+
 
 
 
