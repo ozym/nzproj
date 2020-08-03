@@ -19,8 +19,8 @@ type TransverseMercator struct {
 	f  float64
 	ϕ0 float64
 	λ0 float64
-	N0 float64
-	E0 float64
+	n0 float64
+	e0 float64
 	k0 float64
 
 	_b, _e, _e2, _e4, _e6, _A0, _A2, _A4, _A6, _m0 struct {
@@ -164,13 +164,13 @@ func (tm TransverseMercator) forward(λ, ϕ float64) (float64, float64) {
 	nT3 := φ6 * ν * sinϕ * cosϕ5 * (8.0*ψ4*(11.0-24.0*t2) - 28.0*ψ3*(1.0-6.0*t2) + ψ2*(1.0-32.0*t2) - 2.0*ψ*t2 + t4) / 720.0
 	nT4 := φ8 * ν * sinϕ * cosϕ7 * (1385.0 - 3111.0*t2 + 543.0*t4 - t6) / 40320.0
 
-	N := tm.N0 + tm.k0*(tm.m(ϕ)-tm.m0()+nT1+nT2+nT3+nT4)
+	N := tm.n0 + tm.k0*(tm.m(ϕ)-tm.m0()+nT1+nT2+nT3+nT4)
 
 	eT1 := φ2 * cosϕ2 * (ψ - t2) / 6.0
 	eT2 := φ4 * cosϕ4 * (4.0*ψ3*(1.0-6.0*t2) + ψ2*(1.0+8.0*t2) - 2.0*ψ*t2 + t4) / 120.0
 	eT3 := φ6 * cosϕ6 * (61.0 - 479.0*t2 + 179.0*t4 - t6) / 5040.0
 
-	E := tm.E0 + tm.k0*ν*φ*cosϕ*(1.0+eT1+eT2+eT3)
+	E := tm.e0 + tm.k0*ν*φ*cosϕ*(1.0+eT1+eT2+eT3)
 
 	return E, N
 }
@@ -183,7 +183,7 @@ func (tm TransverseMercator) Inverse(x, y float64) (float64, float64) {
 
 func (tm TransverseMercator) inverse(x, y float64) (float64, float64) {
 
-	N := y - tm.N0
+	N := y - tm.n0
 
 	m := tm.m0() + N/tm.k0
 
@@ -217,7 +217,7 @@ func (tm TransverseMercator) inverse(x, y float64) (float64, float64) {
 	ψ3 := math.Pow(ψ, 3.0)
 	ψ4 := math.Pow(ψ, 4.0)
 
-	E := x - tm.E0
+	E := x - tm.e0
 
 	x1 := E / (tm.k0 * νd)
 	x3 := math.Pow(x1, 3.0)
@@ -249,8 +249,8 @@ func NewZealandTransverseMercator() TransverseMercator {
 		f:  1.0 / 298.257222101,
 		ϕ0: 0.0,
 		λ0: math.Pi * 173.0 / 180.0,
-		N0: 10000000,
-		E0: 1600000,
+		n0: 10000000,
+		e0: 1600000,
 		k0: 0.9996,
 	}
 }

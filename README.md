@@ -113,8 +113,6 @@ func NewNZTM2000() NZTM2000
 ## <a name="TransverseMercator">type</a> [TransverseMercator](/src/target/nztm2000.go?s=429:644#L17)
 ``` go
 type TransverseMercator struct {
-    N0 float64
-    E0 float64
     // contains filtered or unexported fields
 }
 
