@@ -13,7 +13,7 @@ NZTM2000	5,040,771.40 mN		1,197,666.98 mE
 **/
 
 func TestTransverseMercator(t *testing.T) {
-	nz := NewZealandTransverseMercator()
+	nztm := NZTM2000()
 
 	var tests = []struct {
 		x   float64
@@ -42,7 +42,7 @@ func TestTransverseMercator(t *testing.T) {
 	}
 	t.Run("inverse raw conversion", func(t *testing.T) {
 		for _, v := range tests {
-			lon, lat := nz.Inverse(v.x, v.y)
+			lon, lat := nztm.Inverse(v.x, v.y)
 			if d := math.Abs(v.lat - lat); d > 0.00001 {
 				t.Errorf("latitude error: expected %f, got %f (difference %g)", v.lat, lat, d)
 			}
@@ -53,7 +53,6 @@ func TestTransverseMercator(t *testing.T) {
 		}
 	})
 	t.Run("inverse conversion", func(t *testing.T) {
-		nztm := NewNZTM2000()
 		for _, v := range tests {
 			lon, lat := nztm.Inverse(v.x, v.y)
 			if d := math.Abs(v.lat - lat); d > 0.00001 {
@@ -66,7 +65,7 @@ func TestTransverseMercator(t *testing.T) {
 	})
 	t.Run("forward raw conversion", func(t *testing.T) {
 		for _, v := range tests {
-			x, y := nz.Forward(v.lon, v.lat)
+			x, y := nztm.Forward(v.lon, v.lat)
 			if d := math.Abs(v.x - x); d > 0.5 {
 				t.Errorf("x error: expected %g, got %g (difference %g)", v.x, x, d)
 			}
@@ -77,7 +76,6 @@ func TestTransverseMercator(t *testing.T) {
 	})
 
 	t.Run("forward conversion", func(t *testing.T) {
-		nztm := NewNZTM2000()
 		for _, v := range tests {
 			x, y := nztm.Forward(v.lon, v.lat)
 			if d := math.Abs(v.x - x); d > 0.5 {

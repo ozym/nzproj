@@ -5,6 +5,7 @@ type Projection interface {
 	Inverse(float64, float64) (float64, float64)
 }
 
+/*
 func Bounds(p Projection, bb []float64) []float64 {
 	if !(len(bb) > 3) {
 		return nil
@@ -29,3 +30,4 @@ func Bounds(p Projection, bb []float64) []float64 {
 
 	return []float64{x0, y0, x1, y1}
 }
+*/

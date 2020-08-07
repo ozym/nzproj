@@ -11,40 +11,62 @@
 
 
 ## <a name="pkg-index">Index</a>
-* [func Bounds(p Projection, bb []float64) []float64](#Bounds)
-* [type LambertConformal](#LambertConformal)
-  * [func NewZealandLambertConformal() LambertConformal](#NewZealandLambertConformal)
-  * [func (lc LambertConformal) Forward(lon, lat float64) (float64, float64)](#LambertConformal.Forward)
-  * [func (lc LambertConformal) Inverse(x, y float64) (float64, float64)](#LambertConformal.Inverse)
-* [type NZCS2000](#NZCS2000)
-  * [func NewNZCS2000() NZCS2000](#NewNZCS2000)
-* [type NZTM2000](#NZTM2000)
-  * [func NewNZTM2000() NZTM2000](#NewNZTM2000)
+* [func NZCS2000() lambertConformal](#NZCS2000)
+* [func NZTM2000() transverseMercator](#NZTM2000)
+* [func NewLambertConformal(params LambertConformalParams) lambertConformal](#NewLambertConformal)
+* [func NewTransverseMercator(params TransverseMercatorParams) transverseMercator](#NewTransverseMercator)
+* [type LambertConformalParams](#LambertConformalParams)
 * [type Projection](#Projection)
-* [type TransverseMercator](#TransverseMercator)
-  * [func NewZealandTransverseMercator() TransverseMercator](#NewZealandTransverseMercator)
-  * [func (tm TransverseMercator) Forward(lon, lat float64) (float64, float64)](#TransverseMercator.Forward)
-  * [func (tm TransverseMercator) Inverse(x, y float64) (float64, float64)](#TransverseMercator.Inverse)
+* [type TransverseMercatorParams](#TransverseMercatorParams)
 
 
 #### <a name="pkg-files">Package files</a>
-[nzcs2000.go](/src/target/nzcs2000.go) [nztm2000.go](/src/target/nztm2000.go) [projection.go](/src/target/projection.go) 
+[lambert_conformal.go](/src/target/lambert_conformal.go) [nzcs2000.go](/src/target/nzcs2000.go) [nztm2000.go](/src/target/nztm2000.go) [projection.go](/src/target/projection.go) [transverse_mercator.go](/src/target/transverse_mercator.go) 
 
 
 
 
 
-## <a name="Bounds">func</a> [Bounds](/src/target/projection.go?s=139:188#L8)
+## <a name="NZCS2000">func</a> [NZCS2000](/src/target/nzcs2000.go?s=615:647#L19)
 ``` go
-func Bounds(p Projection, bb []float64) []float64
+func NZCS2000() lambertConformal
+```
+NZCS2000 provides an implementation of the New Zealand Continental Shelf projection which satisfies the Projection interface.
+
+
+
+## <a name="NZTM2000">func</a> [NZTM2000](/src/target/nztm2000.go?s=541:575#L16)
+``` go
+func NZTM2000() transverseMercator
+```
+NZTM2000 provides an implementation of the  New Zealand Transverse Mercator which satisfies the Projection interface.
+
+
+
+## <a name="NewLambertConformal">func</a> [NewLambertConformal](/src/target/lambert_conformal.go?s=1227:1299#L42)
+``` go
+func NewLambertConformal(params LambertConformalParams) lambertConformal
+```
+
+
+## <a name="NewTransverseMercator">func</a> [NewTransverseMercator](/src/target/transverse_mercator.go?s=1189:1267#L46)
+``` go
+func NewTransverseMercator(params TransverseMercatorParams) transverseMercator
 ```
 
 
 
-## <a name="LambertConformal">type</a> [LambertConformal](/src/target/nzcs2000.go?s=494:691#L19)
+## <a name="LambertConformalParams">type</a> [LambertConformalParams](/src/target/lambert_conformal.go?s=311:717#L13)
 ``` go
-type LambertConformal struct {
-    // contains filtered or unexported fields
+type LambertConformalParams struct {
+    SemiMajorAxisOfReferenceEllipsoid    float64
+    OriginFlatteningOfReferenceEllipsoid float64
+    LatitudeOfFirstStandardParallel      float64
+    LatitudeOfSecondStandardParallel     float64
+    OriginLatitude                       float64
+    OriginLongitude                      float64
+    FalseNorthingOfProjection            float64
+    FalseEastingOfProjection             float64
 }
 
 ```
@@ -53,67 +75,6 @@ type LambertConformal struct {
 
 
 
-
-### <a name="NewZealandLambertConformal">func</a> [NewZealandLambertConformal](/src/target/nzcs2000.go?s=2783:2833#L115)
-``` go
-func NewZealandLambertConformal() LambertConformal
-```
-
-
-
-
-### <a name="LambertConformal.Forward">func</a> (LambertConformal) [Forward](/src/target/nzcs2000.go?s=1768:1839#L74)
-``` go
-func (lc LambertConformal) Forward(lon, lat float64) (float64, float64)
-```
-
-
-
-### <a name="LambertConformal.Inverse">func</a> (LambertConformal) [Inverse](/src/target/nzcs2000.go?s=2104:2171#L87)
-``` go
-func (lc LambertConformal) Inverse(x, y float64) (float64, float64)
-```
-
-
-
-## <a name="NZCS2000">type</a> [NZCS2000](/src/target/nzcs2000.go?s=3068:3110#L128)
-``` go
-type NZCS2000 struct {
-    LambertConformal
-}
-
-```
-
-
-
-
-
-
-### <a name="NewNZCS2000">func</a> [NewNZCS2000](/src/target/nzcs2000.go?s=3112:3139#L132)
-``` go
-func NewNZCS2000() NZCS2000
-```
-
-
-
-
-## <a name="NZTM2000">type</a> [NZTM2000](/src/target/nztm2000.go?s=6374:6418#L258)
-``` go
-type NZTM2000 struct {
-    TransverseMercator
-}
-
-```
-
-
-
-
-
-
-### <a name="NewNZTM2000">func</a> [NewNZTM2000](/src/target/nztm2000.go?s=6420:6447#L262)
-``` go
-func NewNZTM2000() NZTM2000
-```
 
 
 
@@ -134,10 +95,16 @@ type Projection interface {
 
 
 
-## <a name="TransverseMercator">type</a> [TransverseMercator](/src/target/nztm2000.go?s=429:644#L17)
+## <a name="TransverseMercatorParams">type</a> [TransverseMercatorParams](/src/target/transverse_mercator.go?s=243:584#L12)
 ``` go
-type TransverseMercator struct {
-    // contains filtered or unexported fields
+type TransverseMercatorParams struct {
+    SemiMajorAxisOfReferenceEllipsoid float64
+    FlatteningOfReferenceEllipsoid    float64
+    OriginLatitude                    float64
+    OriginLongitude                   float64
+    FalseNorthingOfProjection         float64
+    FalseEastingOfProjection          float64
+    CentralMeridianScaleFactor        float64
 }
 
 ```
@@ -147,25 +114,6 @@ type TransverseMercator struct {
 
 
 
-### <a name="NewZealandTransverseMercator">func</a> [NewZealandTransverseMercator](/src/target/nztm2000.go?s=6152:6206#L246)
-``` go
-func NewZealandTransverseMercator() TransverseMercator
-```
-
-
-
-
-### <a name="TransverseMercator.Forward">func</a> (TransverseMercator) [Forward](/src/target/nztm2000.go?s=2737:2810#L128)
-``` go
-func (tm TransverseMercator) Forward(lon, lat float64) (float64, float64)
-```
-
-
-
-### <a name="TransverseMercator.Inverse">func</a> (TransverseMercator) [Inverse](/src/target/nztm2000.go?s=4153:4222#L178)
-``` go
-func (tm TransverseMercator) Inverse(x, y float64) (float64, float64)
-```
 
 
 

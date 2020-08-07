@@ -11,7 +11,7 @@ import (
 // NZCS2000	6,580,692.05 mN	2,597,661.53 mE
 
 func TestLambertConformal(t *testing.T) {
-	nz := NewZealandLambertConformal()
+	nzcs := NZCS2000()
 
 	var tests = []struct {
 		x   float64
@@ -40,7 +40,7 @@ func TestLambertConformal(t *testing.T) {
 	}
 	t.Run("inverse raw conversion", func(t *testing.T) {
 		for _, v := range tests {
-			lon, lat := nz.Inverse(v.x, v.y)
+			lon, lat := nzcs.Inverse(v.x, v.y)
 
 			if d := math.Abs(v.lat - lat); d > 0.0000001 {
 				t.Errorf("latitude error: expected %g, got %g (difference %g)", v.lat, lat, d)
@@ -53,7 +53,7 @@ func TestLambertConformal(t *testing.T) {
 	})
 	t.Run("forward raw conversion", func(t *testing.T) {
 		for _, v := range tests {
-			x, y := nz.Forward(v.lon, v.lat)
+			x, y := nzcs.Forward(v.lon, v.lat)
 			if d := math.Abs(v.x - x); d > 0.01 {
 				t.Errorf("x error: expected %g, got %g (difference %g)", v.x, x, d)
 			}
@@ -65,7 +65,6 @@ func TestLambertConformal(t *testing.T) {
 	})
 
 	t.Run("inverse conversion", func(t *testing.T) {
-		nzcs := NewNZCS2000()
 		for _, v := range tests {
 			lon, lat := nzcs.Inverse(v.x, v.y)
 
@@ -80,7 +79,6 @@ func TestLambertConformal(t *testing.T) {
 	})
 
 	t.Run("forward conversion", func(t *testing.T) {
-		nzcs := NewNZCS2000()
 		for _, v := range tests {
 			x, y := nzcs.Forward(v.lon, v.lat)
 			if d := math.Abs(v.x - x); d > 0.01 {
