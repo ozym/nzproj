@@ -16,8 +16,8 @@ import (
 */
 
 // NZCS2000 provides an implementation of the New Zealand Continental Shelf projection which satisfies the Projection interface.
-func NZCS2000() lambertConformal {
-	return NewLambertConformal(LambertConformalParams{
+func NZCS2000() lambertConformalConic {
+	return NewLambertConformalConic(LambertConformalConicParams{
 		SemiMajorAxisOfReferenceEllipsoid:    6378137,
 		OriginFlatteningOfReferenceEllipsoid: 1.0 / 298.257222101,
 		LatitudeOfFirstStandardParallel:      math.Pi * -37.5 / 180.0,

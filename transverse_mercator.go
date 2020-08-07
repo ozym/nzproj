@@ -43,6 +43,7 @@ type transverseMercator struct {
 	a6 float64
 }
 
+// NewTransverseMercator provides an implementation of the Transverse Mercator with the given parameters which satisfies the Projection interface.
 func NewTransverseMercator(params TransverseMercatorParams) transverseMercator {
 
 	// reference parameters
