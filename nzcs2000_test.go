@@ -11,7 +11,7 @@ import (
 // NZCS2000	6,580,692.05 mN	2,597,661.53 mE
 
 func TestLambertConformal(t *testing.T) {
-	nzcs := NZCS2000()
+	nzcs := NewNZCS2000()
 
 	var tests = []struct {
 		x   float64

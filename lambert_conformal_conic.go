@@ -10,6 +10,7 @@ import (
 	are represented by a series of arcs of circles with this point as their centre.
 */
 
+// LambertConformalConicParams holds the projection parameters for a Lambert Conformal Conic projection.
 type LambertConformalConicParams struct {
 	SemiMajorAxisOfReferenceEllipsoid    float64
 	OriginFlatteningOfReferenceEllipsoid float64
@@ -39,7 +40,7 @@ type lambertConformalConic struct {
 	ρ0 float64
 }
 
-// NewLambertConformalConic provides an implementation of the Lambert Conformal Conic projection with the given parameters which satisfies the Projection interface.
+// NewLambertConformalConic provides an implementation of the Lambert Conformal Conic projection with the given parameters.
 func NewLambertConformalConic(params LambertConformalConicParams) lambertConformalConic {
 	lc := lambertConformalConic{
 		a:  params.SemiMajorAxisOfReferenceEllipsoid,

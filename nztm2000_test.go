@@ -13,7 +13,7 @@ NZTM2000	5,040,771.40 mN		1,197,666.98 mE
 **/
 
 func TestTransverseMercator(t *testing.T) {
-	nztm := NZTM2000()
+	nztm := NewNZTM2000()
 
 	var tests = []struct {
 		x   float64

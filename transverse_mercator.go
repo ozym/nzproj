@@ -9,6 +9,7 @@ import (
 	a sphere or ellipsoid, such as the Earth, is projected onto a cylinder tangent along a meridian.
 */
 
+// TransverseMercatorParams describes a Transverse Mercator projection.
 type TransverseMercatorParams struct {
 	SemiMajorAxisOfReferenceEllipsoid float64
 	FlatteningOfReferenceEllipsoid    float64
@@ -43,7 +44,7 @@ type transverseMercator struct {
 	a6 float64
 }
 
-// NewTransverseMercator provides an implementation of the Transverse Mercator with the given parameters which satisfies the Projection interface.
+// NewTransverseMercator provides an implementation of the Transverse Mercator with the given parameters.
 func NewTransverseMercator(params TransverseMercatorParams) transverseMercator {
 
 	// reference parameters
