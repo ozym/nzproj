@@ -22,7 +22,7 @@ type LambertConformalConicParams struct {
 	FalseEastingOfProjection             float64
 }
 
-type lambertConformalConic struct {
+type LambertConformalConic struct {
 	// projection parameters
 	a  float64 // semi-major axis of reference ellipsoid
 	f0 float64 // origin flattening of reference ellipsoid
@@ -41,8 +41,8 @@ type lambertConformalConic struct {
 }
 
 // NewLambertConformalConic provides an implementation of the Lambert Conformal Conic projection with the given parameters.
-func NewLambertConformalConic(params LambertConformalConicParams) lambertConformalConic {
-	lc := lambertConformalConic{
+func NewLambertConformalConic(params LambertConformalConicParams) LambertConformalConic {
+	lc := LambertConformalConic{
 		a:  params.SemiMajorAxisOfReferenceEllipsoid,
 		f0: params.OriginFlatteningOfReferenceEllipsoid,
 		ϕ1: params.LatitudeOfFirstStandardParallel,
@@ -61,22 +61,22 @@ func NewLambertConformalConic(params LambertConformalConicParams) lambertConform
 	return lc
 }
 
-func (lc *lambertConformalConic) m(l float64) float64 {
+func (lc *LambertConformalConic) m(l float64) float64 {
 	return math.Cos(l) / math.Sqrt(1.0-math.Pow(lc.e, 2.0)*math.Pow(math.Sin(l), 2.0))
 }
-func (lc *lambertConformalConic) t(l float64) float64 {
+func (lc *LambertConformalConic) t(l float64) float64 {
 	return math.Tan((math.Pi/4.0)-(l/2.0)) / math.Pow((1.0-lc.e*math.Sin(l))/(1.0+lc.e*math.Sin(l)), lc.e/2.0)
 }
 
-func (lc *lambertConformalConic) ρ(l float64) float64 {
+func (lc *LambertConformalConic) ρ(l float64) float64 {
 	return lc.a * lc.f * math.Pow(lc.t(l), lc.n)
 }
 
-func (lc lambertConformalConic) Forward(lon, lat float64) (float64, float64) {
+func (lc LambertConformalConic) Forward(lon, lat float64) (float64, float64) {
 	return lc.forward(math.Pi*lon/180.0, math.Pi*lat/180.0)
 }
 
-func (lc lambertConformalConic) forward(λ, ϕ float64) (float64, float64) {
+func (lc LambertConformalConic) forward(λ, ϕ float64) (float64, float64) {
 	y := lc.n * (λ - lc.λ0)
 
 	X := lc.e0 + lc.ρ(ϕ)*math.Sin(y)
@@ -85,13 +85,13 @@ func (lc lambertConformalConic) forward(λ, ϕ float64) (float64, float64) {
 	return X, Y
 }
 
-func (lc lambertConformalConic) Inverse(x, y float64) (float64, float64) {
+func (lc LambertConformalConic) Inverse(x, y float64) (float64, float64) {
 	λ, ϕ := lc.inverse(x, y)
 
 	return 180.0 * λ / math.Pi, 180.0 * ϕ / math.Pi
 }
 
-func (lc lambertConformalConic) inverse(x, y float64) (float64, float64) {
+func (lc LambertConformalConic) inverse(x, y float64) (float64, float64) {
 
 	E := x - lc.e0
 	N := y - lc.n0

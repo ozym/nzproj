@@ -16,7 +16,7 @@ import (
 */
 
 type NZCS2000 struct {
-	lambertConformalConic
+	LambertConformalConic
 }
 
 // NZCS2000 provides an implementation of the New Zealand Continental Shelf projection.
