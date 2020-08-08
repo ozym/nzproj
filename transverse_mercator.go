@@ -20,7 +20,7 @@ type TransverseMercatorParams struct {
 	CentralMeridianScaleFactor        float64
 }
 
-type TransverseMercator struct {
+type transverseMercator struct {
 	// projection parameters
 	a  float64 // semi-major axis of reference ellipsoid
 	f  float64 // flattening of reference ellipsoid
@@ -45,10 +45,10 @@ type TransverseMercator struct {
 }
 
 // NewTransverseMercator provides an implementation of the Transverse Mercator with the given parameters.
-func NewTransverseMercator(params TransverseMercatorParams) TransverseMercator {
+func NewTransverseMercator(params TransverseMercatorParams) transverseMercator {
 
 	// reference parameters
-	tm := TransverseMercator{
+	tm := transverseMercator{
 		a:  params.SemiMajorAxisOfReferenceEllipsoid,
 		f:  params.FlatteningOfReferenceEllipsoid,
 		ϕ0: params.OriginLatitude,
@@ -72,7 +72,7 @@ func NewTransverseMercator(params TransverseMercatorParams) TransverseMercator {
 	return tm
 }
 
-func (tm *TransverseMercator) m(ϕ float64) float64 {
+func (tm *transverseMercator) m(ϕ float64) float64 {
 
 	sin2ϕ := math.Sin(2.0 * ϕ)
 	sin4ϕ := math.Sin(4.0 * ϕ)
@@ -81,32 +81,32 @@ func (tm *TransverseMercator) m(ϕ float64) float64 {
 	return tm.a * (tm.a0*ϕ - tm.a2*sin2ϕ + tm.a4*sin4ϕ - tm.a6*sin6ϕ)
 }
 
-func (tm *TransverseMercator) m0() float64 {
+func (tm *transverseMercator) m0() float64 {
 	return tm.m(tm.ϕ0)
 }
 
-func (tm *TransverseMercator) ρ(ϕ float64) float64 {
+func (tm *transverseMercator) ρ(ϕ float64) float64 {
 
 	sinϕ2 := math.Pow(math.Sin(ϕ), 2.0)
 
 	return tm.a * (1.0 - tm.e2) / math.Pow(1.0-tm.e2*sinϕ2, 3/2)
 }
 
-func (tm *TransverseMercator) ν(ϕ float64) float64 {
+func (tm *transverseMercator) ν(ϕ float64) float64 {
 	sinϕ2 := math.Pow(math.Sin(ϕ), 2.0)
 
 	return tm.a / math.Sqrt(1.0-tm.e2*sinϕ2)
 }
 
-func (tm *TransverseMercator) ψ(ϕ float64) float64 {
+func (tm *transverseMercator) ψ(ϕ float64) float64 {
 	return tm.ν(ϕ) / tm.ρ(ϕ)
 }
 
-func (tm TransverseMercator) Forward(lon, lat float64) (float64, float64) {
+func (tm transverseMercator) Forward(lon, lat float64) (float64, float64) {
 	return tm.forward(math.Pi*lon/180.0, math.Pi*lat/180.0)
 }
 
-func (tm TransverseMercator) forward(λ, ϕ float64) (float64, float64) {
+func (tm transverseMercator) forward(λ, ϕ float64) (float64, float64) {
 
 	t := math.Tan(ϕ)
 	t2 := math.Pow(t, 2.0)
@@ -152,13 +152,13 @@ func (tm TransverseMercator) forward(λ, ϕ float64) (float64, float64) {
 	return E, N
 }
 
-func (tm TransverseMercator) Inverse(x, y float64) (float64, float64) {
+func (tm transverseMercator) Inverse(x, y float64) (float64, float64) {
 	λ, ϕ := tm.inverse(x, y)
 
 	return 180.0 * λ / math.Pi, 180.0 * ϕ / math.Pi
 }
 
-func (tm TransverseMercator) inverse(x, y float64) (float64, float64) {
+func (tm transverseMercator) inverse(x, y float64) (float64, float64) {
 
 	N := y - tm.n0
 

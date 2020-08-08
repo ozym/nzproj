@@ -14,7 +14,7 @@ import (
 
 // NZTM2000 is an implementation of the New Zealand Transverse Mercator projection.
 type NZTM2000 struct {
-	TransverseMercator
+	transverseMercator
 }
 
 // NewNZTM2000 returns an implementation of the New Zealand Transverse Mercator.
